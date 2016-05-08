@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/score.png">
+
+    <title>The Main</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">The Main</h3>
+              <nav>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">Search summoner.</h1>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+				<div class="input-group input-group-lg">
+					<input id="summonerName" type="text" class="form-control" aria-label="...">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search in <span class="caret"></span></button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="#" onClick="javascript:searchSummoner('br');">Brazil</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('eune');">Europe Nordic East</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('euw');">Europe West</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('jp');">Japan</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('kr');">Korea</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('lan');">Latin America North</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('las');">Latin America South</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('na');">Nort America</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('oce');">Oceania</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('ru');">Russia</a></li>
+							<li><a href="#" onClick="javascript:searchSummoner('tr');">Turkey</a></li>
+						</ul>
+					</div><!-- /btn-group -->
+			    </div><!-- /input-group -->
+			</div><!-- /.col-lg-6 -->
+          </div>
+
+		  <!-- Modal that shows the summoner search data -->
+		  <div class="modal modal-wide fade" id="summonerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+				  <div class="modal-content">
+					  <div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						  <h3 class="modal-title" style="color: black;" id="modalHead"></h3>
+						  <h6 style="color: black;" id="summonerLv"></h6>						  
+					  </div>
+					  <div class="modal-body">
+					  <i class="icon-upload icon-large"></i>					    
+					      <a id="tsummonerIcon" data-toggle="tooltip" data-original-title=""> 
+					      	<img id="summonerIcon" src="" class="img-rounded">
+					      </a>
+					      
+					      <h5 style="color: black;" id="mainRole"></h5>
+						  
+						  <h4 style="color: black;" id="mainChampions"></h4>
+					      
+						  <a id="tchampion1" data-toggle="tooltip" data-original-title=""> 
+					      	<img id="champion1" src="" class="img-rounded">
+					      </a>
+					      <a id="tchampion0" data-toggle="tooltip" data-original-title=""> 
+					      	<img id="champion0" src="" class="img-rounded">
+					      </a>
+					      <a id="tchampion2" data-toggle="tooltip" data-original-title=""> 	      
+					      	<img id="champion2" src="" class="img-rounded">
+					      </a>
+					      
+					      <h4 style="color: black;" id="themCounters"></h4>
+					      
+						  <a id="tcounter1" data-toggle="tooltip" data-original-title=""> 
+					      	<img id="counter1" src="" class="img-rounded">
+					      </a>
+					      <a id="tcounter0" data-toggle="tooltip" data-original-title=""> 
+					      	<img id="counter0" src="" class="img-rounded">
+					      </a>
+					      <a id="tcounter2" data-toggle="tooltip" data-original-title=""> 	      
+					      	<img id="counter2" src="" class="img-rounded">
+					      </a>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+		  
+          <div class="mastfoot">
+            <div class="inner">
+              <p><a target="_blank" href="https://www.linkedin.com/in/wesleyosorio">Development by Wesley Osorio.</a></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/waitingfor.js"></script>
+  </body>
+  <script>
+  		function searchSummoner(region){
+  			summonerName = document.getElementById('summonerName').value;
+  			
+  			url = 'http://localhost/lolstatics/model/returnJson.php?action=searchSummoner&summonerName='+summonerName+'&region='+region;//make this variable
+  			waitingDialog.show('Wait a second...');
+  			$.getJSON(url, function(result){  				
+  		        $.each(result, function(i, summoner){
+  		            if(typeof summoner.message != 'undefined'){
+  		            	$('#modalHead').text('Summoner not found');
+  		            	document.getElementById('summonerIcon').src = '';
+  		            	document.getElementById('champion0').src = '';
+  		            	document.getElementById('champion1').src = '';
+  		            	document.getElementById('champion2').src = '';
+  		            	$("#summonerLv").text('');
+						$("#mainChampions").text('');
+						$("#mainRole").text('');
+						$("#themCounters").text('');
+						document.getElementById('counter0').src = '';
+  		            	document.getElementById('counter1').src = '';
+  		            	document.getElementById('counter2').src = '';
+  		            }else{ 		       
+  		            	//Summoner data
+  		            	$('#modalHead').text(summoner.name);
+  		            	$("#summonerLv").text('Level: '+summoner.summonerLevel);
+  	  		          	document.getElementById('summonerIcon').src = 'http://ddragon.leagueoflegends.com/cdn/6.8.1/img/profileicon/'+
+  	  		          														summoner.profileIconId+'.png';
+	  	  		        $('#tsummonerIcon').tooltip('hide')
+			              .attr('data-original-title', "Ranked Stats<br>Wins: "+summoner.wins
+													 +" Losses: "+summoner.losses)
+			              .tooltip({html:true});
+  	  		          	$("#mainRole").text(summoner.mainRole);
+  	  		          	//Main Champions
+  	  		          	$("#mainChampions").text('Main Champions');							  		        		  	  		   	  	  		    	  	  		        			            			            			            	
+		            	document.getElementById('champion0').src = summoner.summonerMastery['0'].championSquare;		            	
+		            	$('#tchampion0').tooltip('hide')
+	  		              				.attr('data-original-title', summoner.summonerMastery['0'].championName
+      										+ '<br> Mastery Points:'+summoner.summonerMastery['0'].championPointsSinceLastLevel
+      										+ '<br> Wins:'+summoner.summonerMastery['0'].wins
+      										+ ' - Losses:'+summoner.summonerMastery['0'].losses
+	  		              					)
+	  		              				.tooltip({html:true});
+		            	document.getElementById('champion1').src = summoner.summonerMastery['1'].championSquare;
+		            	$('#tchampion1').tooltip('hide')
+			            				.attr('data-original-title', summoner.summonerMastery['1'].championName
+											+ '<br> Mastery Points:'+summoner.summonerMastery['1'].championPointsSinceLastLevel
+											+ '<br> Wins:'+summoner.summonerMastery['1'].wins
+      										+ ' - Losses:'+summoner.summonerMastery['1'].losses
+      										)
+			            				.tooltip({html:true});
+		            	document.getElementById('champion2').src = summoner.summonerMastery['2'].championSquare;
+		            	$('#tchampion2').tooltip('hide')
+			            				.attr('data-original-title', summoner.summonerMastery['2'].championName
+											+ '<br> Mastery Points:'+summoner.summonerMastery['2'].championPointsSinceLastLevel
+											+ '<br> Wins:'+summoner.summonerMastery['2'].wins
+      										+ ' - Losses:'+summoner.summonerMastery['2'].losses
+      										)
+			            				.tooltip({html:true});
+		            	//Counters Data
+		            	$("#themCounters").text('Them Counter');		            			            			           		            
+		            	document.getElementById('counter0').src = summoner.summonerMastery['0'].counter.championSquare;
+		            	$('#tcounter0').tooltip('hide')
+			            				.attr('data-original-title', summoner.summonerMastery['0'].championName
+			            						+ ' - ' + summoner.summonerMastery['0'].counter.championName
+												+ '<br> Losses against:'+summoner.summonerMastery['0'].counter.losses
+												+ '<br> Deaths against:'+summoner.summonerMastery['0'].counter.deaths
+										)
+			            				.tooltip({html:true});
+		            	document.getElementById('counter1').src = summoner.summonerMastery['1'].counter.championSquare;
+		            	$('#tcounter1').tooltip('hide')
+				        				.attr('data-original-title', summoner.summonerMastery['1'].championName
+				        						+ ' - ' + summoner.summonerMastery['1'].counter.championName
+												+ '<br> Losses against:'+summoner.summonerMastery['1'].counter.losses
+												+ '<br> Deaths against:'+summoner.summonerMastery['1'].counter.deaths
+										)
+				        				.tooltip({html:true});
+		            	document.getElementById('counter2').src = summoner.summonerMastery['2'].counter.championSquare;
+				    	$('#tcounter2').tooltip('hide')
+				        				.attr('data-original-title', summoner.summonerMastery['2'].championName
+				        						+ ' - ' + summoner.summonerMastery['2'].counter.championName
+												+ '<br> Losses against:'+summoner.summonerMastery['2'].counter.losses
+												+ '<br> Deaths against:'+summoner.summonerMastery['2'].counter.deaths
+										)
+				        				.tooltip({html:true});
+  		            }//if(summoner.name == ''){
+  		            
+  		          $("#summonerModal").modal('show'); 
+  		       });
+  		       waitingDialog.hide();
+  		    });
+  		}//function searchSummoner(region){
+  			
+  		
+  </script>
+</html>
