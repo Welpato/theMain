@@ -128,7 +128,7 @@ class dataSearch{
 		
 		// get the result and parse to JSON
 		$resultMastery = json_decode($result, true);
-		//get the champions id returned and search for them name and insert the champion "profile image"
+		//get the champions id returned and search for their name and insert the champion "profile image"
 		$i = 0;
 		foreach($resultMastery as $champion){
 			$c = $this->returnChampionName($champion['championId']);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="img/score.png">
+    <link rel="icon" href="img/champion.png">
 
     <title>The Main</title>
 
@@ -85,7 +85,7 @@
 					      	<img id="champion2" src="" class="img-rounded">
 					      </a>
 					      
-					      <h4 style="color: black;" id="themCounters"></h4>
+					      <h4 style="color: black;" id="theirCounters"></h4>
 					      
 						  <a id="tcounter1" data-toggle="tooltip" data-original-title=""> 
 					      	<img id="counter1" src="" class="img-rounded">
@@ -138,7 +138,7 @@
   		            	$("#summonerLv").text('');
 						$("#mainChampions").text('');
 						$("#mainRole").text('');
-						$("#themCounters").text('');
+						$("#theirCounters").text('');
 						document.getElementById('counter0').src = '';
   		            	document.getElementById('counter1').src = '';
   		            	document.getElementById('counter2').src = '';
@@ -180,7 +180,7 @@
       										)
 			            				.tooltip({html:true});
 		            	//Counters Data
-		            	$("#themCounters").text('Them Counter');		            			            			           		            
+		            	$("#theirCounters").text('Their Counter');		            			            			           		            
 		            	document.getElementById('counter0').src = summoner.summonerMastery['0'].counter.championSquare;
 		            	$('#tcounter0').tooltip('hide')
 			            				.attr('data-original-title', summoner.summonerMastery['0'].championName
