@@ -209,8 +209,9 @@
   		            
   		          $("#summonerModal").modal('show'); 
   		       });
-  		       waitingDialog.hide();
-  		    });
+  		    }).always(function(d) {
+                       waitingDialog.hide();
+                    }).fail(function(d) { alert("Loading Error!");});
   		}//function searchSummoner(region){
   			
   		
